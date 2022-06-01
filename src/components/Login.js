@@ -12,12 +12,19 @@ const Login = () => {
     $password: String!
     $name: String!
   ) {
-    signup(
+    createUser(
       email: $email
       password: $password
-      name: $name
+      username: $name
     ) {
-      token
+      
+      user {
+         id
+         email
+         password
+         username
+      }
+
     }
   }
 `;
@@ -60,8 +67,9 @@ const [signup] = useMutation(SIGNUP_MUTATION, {
     email: formState.email,
     password: formState.password
   },
-  onCompleted: ({ signup }) => {
-    localStorage.setItem(AUTH_TOKEN, signup.token);
+  onCompleted: ({ createUser }) => {
+    console.log(createUser);
+    // localStorage.setItem(AUTH_TOKEN, signup.token);
     navigate('/');
   }
  });
